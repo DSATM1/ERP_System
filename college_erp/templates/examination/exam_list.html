@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block title %}Examinations - College ERP{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2><i class="bi bi-file-earmark-text"></i> Examinations</h2>
+        {% if user.is_admin or user.is_faculty %}
+        <a href="{% url 'examination:exam_create' %}" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> Schedule Exam
+        </a>
+        {% endif %}
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Exam Name</th>
+                            <th>Type</th>
+                            <th>Course</th>
+                            <th>Semester</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for exam in exams %}
+                        <tr>
+                            <td>{{ exam.name }}</td>
+                            <td><span class="badge bg-info">{{ exam.get_exam_type_display }}</span></td>
+                            <td>{{ exam.course.name }}</td>
+                            <td>Sem {{ exam.semester.semester_number }}</td>
+                            <td>{{ exam.start_date|date:"d M Y" }}</td>
+                            <td>{{ exam.end_date|date:"d M Y" }}</td>
+                            <td>
+                                {% if exam.is_active %}
+                                <span class="badge bg-success">Active</span>
+                                {% else %}
+                                <span class="badge bg-secondary">Completed</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <a href="{% url 'examination:exam_detail' exam.pk %}" class="btn btn-sm btn-outline-info">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="8" class="text-center text-muted">No examinations scheduled.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

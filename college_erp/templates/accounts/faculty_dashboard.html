@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}Faculty Dashboard - College ERP{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <h2 class="mb-4"><i class="bi bi-person-workspace"></i> Faculty Dashboard</h2>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Welcome, {{ user.get_full_name }}!</h5>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted">Manage your classes, mark attendance, and enter student grades.</p>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <a href="{% url 'attendance:mark_attendance' %}" class="btn btn-outline-primary w-100">
+                                <i class="bi bi-calendar-check"></i> Mark Attendance
+                            </a>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <a href="{% url 'examination:grade_entry' %}" class="btn btn-outline-success w-100">
+                                <i class="bi bi-file-earmark-text"></i> Enter Grades
+                            </a>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <a href="{% url 'timetable:timetable_list' %}" class="btn btn-outline-info w-100">
+                                <i class="bi bi-calendar-week"></i> View Timetable
+                            </a>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <a href="{% url 'students:student_list' %}" class="btn btn-outline-warning w-100">
+                                <i class="bi bi-mortarboard"></i> View Students
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="bi bi-info-circle"></i> Profile Summary</h5>
+                </div>
+                <div class="card-body">
+                    <p><strong>Department:</strong> {{ faculty.department.name|default:"N/A" }}</p>
+                    <p><strong>Designation:</strong> {{ faculty.designation|default:"N/A" }}</p>
+                    <p><strong>Subjects:</strong> {{ faculty.subjects_count|default:0 }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

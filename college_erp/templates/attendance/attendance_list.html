@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+{% block title %}Attendance - College ERP{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2><i class="bi bi-calendar-check"></i> Attendance Records</h2>
+        {% if user.is_faculty or user.is_admin %}
+        <a href="{% url 'attendance:mark_attendance' %}" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> Mark Attendance
+        </a>
+        {% endif %}
+    </div>
+
+    <!-- Filters -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <form method="get" class="row g-3">
+                <div class="col-md-3">
+                    <input type="date" name="date" class="form-control" placeholder="Select Date">
+                </div>
+                <div class="col-md-3">
+                    <select name="subject" class="form-select">
+                        <option value="">All Subjects</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <select name="status" class="form-select">
+                        <option value="">All Status</option>
+                        <option value="present">Present</option>
+                        <option value="absent">Absent</option>
+                        <option value="late">Late</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="bi bi-search"></i> Filter
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Student</th>
+                            <th>Subject</th>
+                            <th>Status</th>
+                            <th>Marked By</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for attendance in attendances %}
+                        <tr>
+                            <td>{{ attendance.date|date:"d M Y" }}</td>
+                            <td>{{ attendance.student.user.get_full_name }}</td>
+                            <td>{{ attendance.subject.code }}</td>
+                            <td>
+                                {% if attendance.status == 'present' %}
+                                <span class="badge bg-success">Present</span>
+                                {% elif attendance.status == 'absent' %}
+                                <span class="badge bg-danger">Absent</span>
+                                {% elif attendance.status == 'late' %}
+                                <span class="badge bg-warning">Late</span>
+                                {% else %}
+                                <span class="badge bg-info">Excused</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ attendance.marked_by.get_full_name }}</td>
+                            <td>
+                                <a href="{% url 'attendance:attendance_report' attendance.student.pk %}" class="btn btn-sm btn-outline-info">
+                                    <i class="bi bi-file-text"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="6" class="text-center text-muted">No attendance records found.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

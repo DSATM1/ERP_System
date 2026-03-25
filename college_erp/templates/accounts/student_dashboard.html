@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}Student Dashboard - College ERP{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <h2 class="mb-4"><i class="bi bi-mortarboard"></i> Student Dashboard</h2>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Welcome, {{ user.get_full_name }}!</h5>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted">View your academic information, attendance, and results here.</p>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <a href="{% url 'attendance:attendance_list' %}" class="btn btn-outline-primary w-100 mb-2">
+                                <i class="bi bi-calendar-check"></i> View Attendance
+                            </a>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="{% url 'examination:result_list' %}" class="btn btn-outline-success w-100 mb-2">
+                                <i class="bi bi-file-earmark-text"></i> View Results
+                            </a>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="{% url 'timetable:timetable_list' %}" class="btn btn-outline-info w-100 mb-2">
+                                <i class="bi bi-calendar-week"></i> View Timetable
+                            </a>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="{% url 'fees:fee_list' %}" class="btn btn-outline-warning w-100 mb-2">
+                                <i class="bi bi-currency-rupee"></i> View Fee Details
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="bi bi-person-circle"></i> Profile Summary</h5>
+                </div>
+                <div class="card-body">
+                    <p><strong>Roll Number:</strong> {{ student.roll_number|default:"N/A" }}</p>
+                    <p><strong>Course:</strong> {{ student.course.name|default:"N/A" }}</p>
+                    <p><strong>Semester:</strong> {{ student.semester|default:"N/A" }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

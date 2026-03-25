@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block title %}Courses - College ERP{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2><i class="bi bi-book"></i> Courses / Programs</h2>
+        {% if user.is_admin %}
+        <a href="{% url 'academics:course_create' %}" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> Add Course
+        </a>
+        {% endif %}
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover" id="courseTable">
+                    <thead>
+                        <tr>
+                            <th>Code</th>
+                            <th>Name</th>
+                            <th>Department</th>
+                            <th>Type</th>
+                            <th>Duration</th>
+                            <th>Semesters</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for course in courses %}
+                        <tr>
+                            <td><span class="badge bg-secondary">{{ course.code }}</span></td>
+                            <td>{{ course.name }}</td>
+                            <td>{{ course.department.name }}</td>
+                            <td><span class="badge bg-info">{{ course.get_course_type_display }}</span></td>
+                            <td>{{ course.duration_years }} Years</td>
+                            <td>{{ course.total_semesters }}</td>
+                            <td>
+                                {% if course.is_active %}
+                                <span class="badge bg-success">Active</span>
+                                {% else %}
+                                <span class="badge bg-danger">Inactive</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if user.is_admin %}
+                                <a href="{% url 'academics:course_edit' course.pk %}" class="btn btn-sm btn-outline-primary">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <a href="{% url 'academics:course_delete' course.pk %}" class="btn btn-sm btn-outline-danger">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="8" class="text-center text-muted">No courses found.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

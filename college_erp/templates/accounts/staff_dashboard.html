@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}Staff Dashboard - College ERP{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <h2 class="mb-4"><i class="bi bi-people-fill"></i> Staff Dashboard</h2>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Welcome, {{ user.get_full_name }}!</h5>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted">Manage administrative tasks and student records.</p>
+
+                    <div class="row">
+                        <div class="col-md-3 mb-3">
+                            <a href="{% url 'students:student_list' %}" class="btn btn-outline-primary w-100">
+                                <i class="bi bi-mortarboard"></i> Manage Students
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a href="{% url 'library:book_list' %}" class="btn btn-outline-success w-100">
+                                <i class="bi bi-book-half"></i> Library
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a href="{% url 'fees:fee_list' %}" class="btn btn-outline-info w-100">
+                                <i class="bi bi-currency-rupee"></i> Fee Management
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a href="{% url 'announcements:announcement_list' %}" class="btn btn-outline-warning w-100">
+                                <i class="bi bi-megaphone"></i> Announcements
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

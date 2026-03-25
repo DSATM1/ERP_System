@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}Announcements - College ERP{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2><i class="bi bi-megaphone"></i> Announcements</h2>
+        {% if user.is_admin %}
+        <a href="{% url 'announcements:announcement_create' %}" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> New Announcement
+        </a>
+        {% endif %}
+    </div>
+
+    {% for announcement in announcements %}
+    <div class="card mb-3 {% if announcement.is_pinned %}border-primary{% endif %}">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">
+                {% if announcement.is_pinned %}
+                <i class="bi bi-pin-angle-fill text-primary"></i>
+                {% endif %}
+                {{ announcement.title }}
+            </h5>
+            <div>
+                <span class="badge bg-{{ announcement.priority_color }}">{{ announcement.get_priority_display }}</span>
+                <span class="badge bg-secondary">{{ announcement.get_category_display }}</span>
+            </div>
+        </div>
+        <div class="card-body">
+            <p class="card-text">{{ announcement.content|truncatewords:50 }}</p>
+            <small class="text-muted">
+                <i class="bi bi-calendar"></i> {{ announcement.publish_date|date:"d M Y" }}
+                {% if announcement.created_by %}
+                | <i class="bi bi-person"></i> {{ announcement.created_by.get_full_name }}
+                {% endif %}
+            </small>
+        </div>
+    </div>
+    {% empty %}
+    <div class="card">
+        <div class="card-body text-center text-muted">
+            <i class="bi bi-megaphone display-4"></i>
+            <p>No announcements available.</p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Admin Dashboard - College ERP{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <h2 class="mb-4"><i class="bi bi-speedometer2"></i> Admin Dashboard</h2>
+
+    <!-- Statistics Cards -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card text-white bg-primary">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="card-title">Total Students</h6>
+                            <h2 class="mb-0">{{ total_students }}</h2>
+                        </div>
+                        <i class="bi bi-mortarboard-fill fs-1"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-success">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="card-title">Total Faculty</h6>
+                            <h2 class="mb-0">{{ total_faculty }}</h2>
+                        </div>
+                        <i class="bi bi-person-workspace fs-1"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-info">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="card-title">Staff Members</h6>
+                            <h2 class="mb-0">{{ total_staff }}</h2>
+                        </div>
+                        <i class="bi bi-people-fill fs-1"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-warning">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="card-title">Departments</h6>
+                            <h2 class="mb-0">{{ total_departments|default:"N/A" }}</h2>
+                        </div>
+                        <i class="bi bi-building fs-1"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="bi bi-lightning"></i> Quick Actions</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3 mb-3">
+                            <a href="{% url 'students:student_create' %}" class="btn btn-outline-primary w-100">
+                                <i class="bi bi-person-plus"></i> Add Student
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a href="{% url 'faculty:faculty_create' %}" class="btn btn-outline-success w-100">
+                                <i class="bi bi-person-badge"></i> Add Faculty
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a href="{% url 'academics:department_create' %}" class="btn btn-outline-info w-100">
+                                <i class="bi bi-building-add"></i> Add Department
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a href="{% url 'announcements:announcement_create' %}" class="btn btn-outline-warning w-100">
+                                <i class="bi bi-megaphone"></i> Add Announcement
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
