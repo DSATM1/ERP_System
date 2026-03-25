@@ -13,7 +13,7 @@ This project is an Enterprise Resource Planning (ERP) system designed to manage 
 
 ## 🔹 Tech Stack
 
-* Python / Flask (if used)
+* Python / Django
 * HTML, CSS, JavaScript
 * Database (MySQL / SQLite)
 
